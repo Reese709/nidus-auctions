@@ -30,7 +30,7 @@ nav a {
 
 .hero {
   /* excavator + construction scene */
-  background-image: url("https://images.unsplash.com/photo-1593359677879-a4bb92f829d2?auto=format&fit=crop&w=1600&q=80");
+  background-image: url("nidusimage.jpg");
   /* this one has a nice excavator in dirt; swap with your own later */
   background-size: cover;
   background-position: center;
@@ -181,3 +181,4 @@ footer {
     margin-left: 0.75rem;
   }
 }
+
