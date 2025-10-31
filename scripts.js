@@ -18,7 +18,7 @@ const auctionItems = [
     price: "$3500",
     category: "control-panels",
     status: "active",
-    endTime: "2025-11-03T16:00:00Z"
+    endTime: "2025-11-03T20:00:00-03:30"
   },
   {
     title: "Industrial Gear Assembly",
@@ -165,4 +165,5 @@ function startCountdowns() {
     });
   }, 1000);
 }
+
 
