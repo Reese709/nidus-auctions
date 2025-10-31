@@ -14,7 +14,7 @@ const auctionItems = [
     title: "Siemens Industrial Control Panel",
     image:
       "https://images.unsplash.com/photo-1581092334504-25a04f1882d0?auto=format&fit=crop&w=1200&q=80",
-    price: "$2,200",
+    price: "$1800",
     category: "control-panels",
     status: "active",
     endTime: "2025-11-03T18:30:00-03:30"
@@ -168,3 +168,4 @@ function startCountdowns() {
     });
   }, 1000);
 }
+
