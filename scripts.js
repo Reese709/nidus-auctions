@@ -9,7 +9,7 @@ const auctionItems = [
     price: "$45,000",
     category: "machinery",
     status: "active",
-    endTime: "2025-11-02T23:59:00Z" // change to your time
+    endTime: "2025-11-03T22:30:00-03:30" // change to your time
   },
   {
     title: "Allen-Bradley MCC Panel",
@@ -165,5 +165,6 @@ function startCountdowns() {
     });
   }, 1000);
 }
+
 
 
