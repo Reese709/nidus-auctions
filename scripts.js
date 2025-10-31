@@ -1,5 +1,6 @@
-// Nidus Auctions - now with status + countdown
-// NOTE: times are in ISO format (YYYY-MM-DDTHH:MM:SSZ)
+// Nidus Auctions - with SOLD labels + live countdown timers (Newfoundland Time)
+
+// Format for endTime: YYYY-MM-DDTHH:MM:SS-03:30 (Newfoundland time)
 
 const auctionItems = [
   {
@@ -9,16 +10,16 @@ const auctionItems = [
     price: "$45,000",
     category: "machinery",
     status: "active",
-    endTime: "2025-11-03T22:30:00-03:30" // change to your time
+    endTime: "2025-11-02T22:00:00-03:30" // 10:00 PM Newfoundland time
   },
   {
-    title: "Allen-Bradley MCC Panel",
+    title: "Siemens Industrial Control Panel",
     image:
-      "https://your-photo-here.jpg",
-    price: "$3500",
+      "https://images.unsplash.com/photo-1581092334504-25a04f1882d0?auto=format&fit=crop&w=1200&q=80",
+    price: "$2,200",
     category: "control-panels",
     status: "active",
-    endTime: "2025-11-03T20:00:00-03:30"
+    endTime: "2025-11-03T18:30:00-03:30" // 6:30 PM Newfoundland time
   },
   {
     title: "Industrial Gear Assembly",
@@ -26,7 +27,7 @@ const auctionItems = [
       "https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=80",
     price: "$650",
     category: "gears",
-    status: "sold",           // 👈 this one will show SOLD
+    status: "sold", // will show SOLD badge
     endTime: null
   },
   {
@@ -36,7 +37,7 @@ const auctionItems = [
     price: "$480",
     category: "engine-parts",
     status: "active",
-    endTime: "2025-11-05T13:30:00Z"
+    endTime: "2025-11-05T13:00:00-03:30" // 1:00 PM Newfoundland time
   },
   {
     title: "Tool & Gadget Lot (Assorted)",
@@ -45,7 +46,7 @@ const auctionItems = [
     price: "$150",
     category: "gadgets",
     status: "active",
-    endTime: "2025-11-01T23:00:00Z"
+    endTime: "2025-11-01T21:00:00-03:30" // 9:00 PM Newfoundland time
   },
   {
     title: "Surplus Electrical Components (Mixed)",
@@ -54,16 +55,17 @@ const auctionItems = [
     price: "$90",
     category: "other",
     status: "active",
-    endTime: "2025-11-04T20:00:00Z"
+    endTime: "2025-11-04T20:30:00-03:30" // 8:30 PM Newfoundland time
   }
 ];
+
+// --- helper functions ---
 
 function getCategoryFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get("category"); // e.g. "gears"
 }
 
-// format category for display
 function formatCategory(cat) {
   switch (cat) {
     case "machinery":
@@ -83,9 +85,8 @@ function formatCategory(cat) {
   }
 }
 
-// helper: build HTML for one card
+// Build HTML for each auction card
 function buildAuctionCard(item, index) {
-  // each card gets a unique timer id
   const timerId = `timer-${index}`;
   const isSold = item.status && item.status.toLowerCase() === "sold";
 
@@ -111,13 +112,14 @@ function buildAuctionCard(item, index) {
   `;
 }
 
+// --- main ---
 window.addEventListener("DOMContentLoaded", () => {
   const grid = document.getElementById("auction-grid");
   if (!grid) return;
 
   const selectedCategory = getCategoryFromURL();
-
   let itemsToShow = auctionItems;
+
   if (selectedCategory) {
     itemsToShow = auctionItems.filter(
       (item) => item.category === selectedCategory
@@ -129,20 +131,18 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // render cards
   grid.innerHTML = itemsToShow
     .map((item, idx) => buildAuctionCard(item, idx))
     .join("");
 
-  // start countdowns
   startCountdowns();
 });
 
+// --- countdown timer ---
 function startCountdowns() {
   const timerEls = document.querySelectorAll(".timer[data-end]");
   if (timerEls.length === 0) return;
 
-  // update every second
   setInterval(() => {
     timerEls.forEach((el) => {
       const endTime = el.getAttribute("data-end");
@@ -165,6 +165,3 @@ function startCountdowns() {
     });
   }, 1000);
 }
-
-
-
