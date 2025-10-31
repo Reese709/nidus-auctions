@@ -8,10 +8,9 @@ const auctionItems = [
     category: "machinery",
   },
   {
-    title: "Siemens Industrial Control Panel",
-    image:
-      "https://images.unsplash.com/photo-1581092334504-25a04f1882d0?auto=format&fit=crop&w=1200&q=80",
-    price: "$2,200",
+    title: "allen-Bradley PanelView Plus",
+    image: "https://your-image-or-github-path.jpg",
+    price: "$1,150",
     category: "control-panels",
   },
   {
@@ -104,3 +103,4 @@ function formatCategory(cat) {
       return cat;
   }
 }
+
