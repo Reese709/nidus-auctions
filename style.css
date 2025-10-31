@@ -181,4 +181,43 @@ footer {
     margin-left: 0.75rem;
   }
 }
+.img-wrap {
+  position: relative;
+}
+
+.sold-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #b91c1c;
+  color: white;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.auction-item.is-sold img {
+  filter: grayscale(0.5);
+  opacity: 0.7;
+}
+
+.timer {
+  background: #0f172a10;
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.35rem;
+  font-size: 0.8rem;
+  color: #111827;
+}
+
+.timer.ended {
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 600;
+}
+
 
