@@ -119,7 +119,7 @@ function buildAuctionCard(item, index) {
 
 window.addEventListener("DOMContentLoaded", () => {
   const grid = document.getElementById("auction-grid");
-  if (!grid) return;
+  const soldContainer = document.getElementById("recently-sold");
 
   const selectedCategory = getCategoryFromURL();
   let itemsToShow = auctionItems;
@@ -128,44 +128,38 @@ window.addEventListener("DOMContentLoaded", () => {
     itemsToShow = auctionItems.filter(
       (item) => item.category === selectedCategory
     );
+  } else {
+    // if no filter, show only non-sold in main grid
+    itemsToShow = auctionItems.filter(
+      (item) => !(item.status && item.status.toLowerCase() === "sold")
+    );
   }
 
-  if (itemsToShow.length === 0) {
-    grid.innerHTML = `<p>No auctions found for this category.</p>`;
-    return;
+  // render active / filtered
+  if (grid) {
+    if (itemsToShow.length === 0) {
+      grid.innerHTML = `<p>No auctions found for this category.</p>`;
+    } else {
+      grid.innerHTML = itemsToShow
+        .map((item, idx) => buildAuctionCard(item, idx))
+        .join("");
+    }
   }
 
-  grid.innerHTML = itemsToShow
-    .map((item, idx) => buildAuctionCard(item, idx))
-    .join("");
+  // render sold (most recent first)
+  if (soldContainer) {
+    const soldItems = auctionItems.filter(
+      (item) => item.status && item.status.toLowerCase() === "sold"
+    );
+    if (soldItems.length === 0) {
+      soldContainer.innerHTML = `<p>No sold items to display.</p>`;
+    } else {
+      soldContainer.innerHTML = soldItems
+        .map((item, idx) => buildAuctionCard(item, idx))
+        .join("");
+    }
+  }
 
+  // start countdowns for items that have timers
   startCountdowns();
 });
-
-function startCountdowns() {
-  const timerEls = document.querySelectorAll(".timer[data-end]");
-  if (timerEls.length === 0) return;
-
-  setInterval(() => {
-    timerEls.forEach((el) => {
-      const endTime = el.getAttribute("data-end");
-      const diff = new Date(endTime).getTime() - Date.now();
-
-      if (diff <= 0) {
-        el.textContent = "Auction ended";
-        el.classList.add("ended");
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-      el.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
-    });
-  }, 1000);
-}
-
