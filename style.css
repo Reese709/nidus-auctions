@@ -219,5 +219,19 @@ footer {
   color: #991b1b;
   font-weight: 600;
 }
+.live-badge {
+  display: inline-block;
+  background: #16a34a;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  margin-top: 0.4rem;
+  margin-right: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
 
 
