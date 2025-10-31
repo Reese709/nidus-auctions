@@ -89,7 +89,14 @@ function formatCategory(cat) {
 function buildAuctionCard(item, index) {
   const timerId = `timer-${index}`;
   const isSold = item.status && item.status.toLowerCase() === "sold";
-
+ // check if active AND has a future end time → then we show LIVE
+  let isLive = false;
+  if (!isSold && item.endTime) {
+    const diff = new Date(item.endTime).getTime() - Date.now();
+    if (diff > 0) {
+      isLive = true;
+    }
+  }
   return `
     <div class="auction-item ${isSold ? "is-sold" : ""}">
       <div class="img-wrap">
@@ -165,3 +172,4 @@ function startCountdowns() {
     });
   }, 1000);
 }
+
