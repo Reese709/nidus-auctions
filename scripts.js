@@ -1,6 +1,4 @@
-// Nidus Auctions - with SOLD labels + live countdown timers (Newfoundland Time)
-
-// Format for endTime: YYYY-MM-DDTHH:MM:SS-03:30 (Newfoundland time)
+// Nidus Auctions - with SOLD labels + LIVE badges + live countdowns (Newfoundland Time)
 
 const auctionItems = [
   {
@@ -10,7 +8,7 @@ const auctionItems = [
     price: "$45,000",
     category: "machinery",
     status: "active",
-    endTime: "2025-11-02T22:00:00-03:30" // 10:00 PM Newfoundland time
+    endTime: "2025-11-02T22:00:00-03:30"
   },
   {
     title: "Siemens Industrial Control Panel",
@@ -19,7 +17,7 @@ const auctionItems = [
     price: "$2,200",
     category: "control-panels",
     status: "active",
-    endTime: "2025-11-03T18:30:00-03:30" // 6:30 PM Newfoundland time
+    endTime: "2025-11-03T18:30:00-03:30"
   },
   {
     title: "Industrial Gear Assembly",
@@ -27,7 +25,7 @@ const auctionItems = [
       "https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=80",
     price: "$650",
     category: "gears",
-    status: "sold", // will show SOLD badge
+    status: "sold",
     endTime: null
   },
   {
@@ -37,7 +35,7 @@ const auctionItems = [
     price: "$480",
     category: "engine-parts",
     status: "active",
-    endTime: "2025-11-05T13:00:00-03:30" // 1:00 PM Newfoundland time
+    endTime: "2025-11-05T13:00:00-03:30"
   },
   {
     title: "Tool & Gadget Lot (Assorted)",
@@ -46,7 +44,7 @@ const auctionItems = [
     price: "$150",
     category: "gadgets",
     status: "active",
-    endTime: "2025-11-01T21:00:00-03:30" // 9:00 PM Newfoundland time
+    endTime: "2025-11-01T21:00:00-03:30"
   },
   {
     title: "Surplus Electrical Components (Mixed)",
@@ -55,15 +53,13 @@ const auctionItems = [
     price: "$90",
     category: "other",
     status: "active",
-    endTime: "2025-11-04T20:30:00-03:30" // 8:30 PM Newfoundland time
+    endTime: "2025-11-04T20:30:00-03:30"
   }
 ];
 
-// --- helper functions ---
-
 function getCategoryFromURL() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("category"); // e.g. "gears"
+  return params.get("category");
 }
 
 function formatCategory(cat) {
@@ -85,11 +81,11 @@ function formatCategory(cat) {
   }
 }
 
-// Build HTML for each auction card
 function buildAuctionCard(item, index) {
   const timerId = `timer-${index}`;
   const isSold = item.status && item.status.toLowerCase() === "sold";
- // check if active AND has a future end time → then we show LIVE
+
+  // show LIVE only if active + future end time
   let isLive = false;
   if (!isSold && item.endTime) {
     const diff = new Date(item.endTime).getTime() - Date.now();
@@ -97,6 +93,7 @@ function buildAuctionCard(item, index) {
       isLive = true;
     }
   }
+
   return `
     <div class="auction-item ${isSold ? "is-sold" : ""}">
       <div class="img-wrap">
@@ -107,6 +104,7 @@ function buildAuctionCard(item, index) {
         <h3>${item.title}</h3>
         <p><strong>${formatCategory(item.category)}</strong></p>
         <p>Starting at ${item.price}</p>
+        ${isLive ? `<span class="live-badge">LIVE</span>` : ""}
         ${
           !isSold && item.endTime
             ? `<p class="timer" id="${timerId}" data-end="${item.endTime}">Loading timer...</p>`
@@ -119,7 +117,6 @@ function buildAuctionCard(item, index) {
   `;
 }
 
-// --- main ---
 window.addEventListener("DOMContentLoaded", () => {
   const grid = document.getElementById("auction-grid");
   if (!grid) return;
@@ -145,7 +142,6 @@ window.addEventListener("DOMContentLoaded", () => {
   startCountdowns();
 });
 
-// --- countdown timer ---
 function startCountdowns() {
   const timerEls = document.querySelectorAll(".timer[data-end]");
   if (timerEls.length === 0) return;
@@ -172,4 +168,3 @@ function startCountdowns() {
     });
   }, 1000);
 }
-
