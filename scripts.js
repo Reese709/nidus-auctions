@@ -12,10 +12,10 @@ const auctionItems = [
     endTime: "2025-11-02T23:59:00Z" // change to your time
   },
   {
-    title: "Siemens Industrial Control Panel",
+    title: "Allen-Bradley MCC Panel",
     image:
-      "https://images.unsplash.com/photo-1581092334504-25a04f1882d0?auto=format&fit=crop&w=1200&q=80",
-    price: "$2,200",
+      "https://your-photo-here.jpg",
+    price: "$3500",
     category: "control-panels",
     status: "active",
     endTime: "2025-11-03T16:00:00Z"
@@ -165,3 +165,4 @@ function startCountdowns() {
     });
   }, 1000);
 }
+
